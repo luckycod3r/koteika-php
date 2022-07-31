@@ -25,6 +25,7 @@ use Models\User;
                 <li><a href="/sales">Акции</a></li>
                 <li><a href="/reviews">Отзывы</a></li>
                 <li><a href="/about">О нас</a></li>
+                <li><a jsl>Корзина</a></li>
 
                 <li><a href="#"></a></li>
             </ul>

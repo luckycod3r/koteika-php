@@ -1,4 +1,8 @@
+<?php
 
+use Models\Cart;
+
+?>
 <div class="catalog-product-window">
 
         <div class="catalog-product-image">
@@ -15,6 +19,7 @@
             <span class="product-sub-cat">Размерный ряд</span>
             <div class="size-table">
                 <?php
+
                     foreach ($sizes as $s):
                         $not = "";
                         if($s["amount"] < 1) $not = "not";

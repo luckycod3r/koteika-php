@@ -6,12 +6,15 @@ use Boot\Router;
 use Controllers\CatalogController;
 use Controllers\PageController;
 use Models\Database;
+use Models\Cart;
 use Models\Javascript;
 
 require_once('../boot/boot.php');
 require_once('../boot/Helpers.php');
 
 $db = new Database();
+
+$cart = new Cart();
 
 Router::get("/", [PageController::class, 'index']);
 

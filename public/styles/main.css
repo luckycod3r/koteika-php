@@ -249,3 +249,13 @@ a{
 .product-actions a:hover{
     transform: scale(1.02);
 }
+
+.cart-section{
+    height: 10vh;
+    width: 20vw;
+    border-radius: 20px;
+    position: absolute;
+    right: 2vw;
+    background-color: #111111;
+    top: 19vh;
+}
