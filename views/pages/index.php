@@ -7,7 +7,7 @@
 
 <?php
     // Блок новостей
-
+/*
 foreach ($data["news"] as $new)
 {
     ?>
@@ -23,3 +23,4 @@ foreach ($data["news"] as $new)
 <?php
 }
 ?>
+*/

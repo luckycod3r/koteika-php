@@ -228,6 +228,7 @@ h1{
 
 a{
     text-decoration: none;
+    cursor: pointer;
 }
 
 .product-sub-cat{
@@ -258,4 +259,27 @@ a{
     right: 2vw;
     background-color: #111111;
     top: 19vh;
+}
+
+
+.cart-btn{
+    justify-self: flex-end;
+    position: relative;
+}
+
+
+
+
+.cart-counter{
+    height: 2vh;
+    right: -1vw;
+    top: -1vh;
+    width: calc(0vw + 2vh);
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    justify-content: center;
 }

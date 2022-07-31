@@ -9,7 +9,7 @@ class Database{
     {
         $host = "localhost";
         $user = "root";
-        $password = "root";
+        $password = "";
         $db_name = "title_shop";
         if(self::$handle === null){
             $options = [

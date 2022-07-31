@@ -4,6 +4,9 @@
 use Models\Javascript;
 use Models\User;
 
+
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -25,7 +28,7 @@ use Models\User;
                 <li><a href="/sales">Акции</a></li>
                 <li><a href="/reviews">Отзывы</a></li>
                 <li><a href="/about">О нас</a></li>
-                <li><a jsl>Корзина</a></li>
+                <li class="cart-btn"><a jsl>Корзина</a><div class="cart-counter"><?php   ?>></div></li>
 
                 <li><a href="#"></a></li>
             </ul>
@@ -38,8 +41,7 @@ use Models\User;
         footer
     </footer>
     <?php
-
-
+        Javascript::public("jquery-3.6.0.min.js");
         Javascript::public("system.js");
         Javascript::public("AquaJS.min.js");
         Javascript::private("main.js");
