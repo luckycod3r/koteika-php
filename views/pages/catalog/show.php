@@ -27,7 +27,8 @@ use Models\Cart;
                     endforeach;
                 ?>
             </div>
-            <span class="product-price"><?=$data["price"]?></span>
+            <span class="product-sub-cat">Стоимость</span>
+            <span class="product-price"><?=$data["price"]?>₽</span>
             <div class="product-actions">
                 <a>Купить</a>
                 <a>В корзину</a>

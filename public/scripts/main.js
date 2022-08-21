@@ -1,21 +1,27 @@
-let _console = {
-    error: console.error
-}
+// CORE
 
-if(console.error){
-    console.error = _console.error;
-    system.logger = _console;
-}
-let zHelp = String;
+const ECORE = new CORE();
+const CART = ECORE.CART();
 
-String = function() {
-    if (arguments[0] === console.error) {
-        arguments[0] = _console.error;
+// REGISTER NEW EVENTS...
+
+new NULLEvent("cartOpen",(e)=>{
+    console.log(e)
+    if(CART.opened){
+        CART.close();
     }
-    return zHelp.apply(null, arguments)
-}
+    else{
+        CART.open();
+    }
+});
 
-console.error = function(...error){
+new NULLEvent("cartAdd",(e)=>{
+    let r = new Request("cartAdd",{
+        item : e.nulled[0]
+    });
+    r.post();
+})
 
-}
-console.error.toString = null;
+
+
+// OTHER CODE...
