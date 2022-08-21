@@ -24,4 +24,38 @@ new NULLEvent("cartAdd",(e)=>{
 
 
 
+<<<<<<< HEAD
 // OTHER CODE...
+=======
+}
+console.error.toString = null;
+
+
+
+function get_cart(){
+    $.ajax({
+        url: '/handler',
+        method: 'post',
+        dataType: 'text',
+        data: {action: 'cart'},
+        success: function(data){
+            alert(data);
+        }
+    });
+}
+
+function add_cart(){
+    $.ajax({
+        url: '/handler',
+        method: 'post',
+        dataType: 'text',
+        data: {action: 'cart'},
+        success: function(data){
+            alert(data);
+        }
+    });
+}
+
+add_cart();
+get_cart();
+>>>>>>> origin/master

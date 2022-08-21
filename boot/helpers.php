@@ -1,10 +1,17 @@
 <?php
 
+use Models\Cart;
 use Models\Database;
 
 function db(){
     $conn = new Database();
     return $conn;
+}
+
+function cart(){
+    $cart = new Cart();
+    retun $cart;
+
 }
 
 function view($page, $params = [])

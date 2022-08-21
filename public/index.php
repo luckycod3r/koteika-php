@@ -9,13 +9,12 @@ use Controllers\RequestController;
 use Models\Database;
 use Models\Cart;
 use Models\Javascript;
+use Controllers\HandlerController;
 
 require_once('../boot/boot.php');
-require_once('../boot/Helpers.php');
+require_once('../boot/helpers.php');
 
 $db = new Database();
-
-$cart = new Cart();
 
 Router::get("/", [PageController::class, 'index']);
 
@@ -28,6 +27,9 @@ Router::get("/ajax", [CatalogController::class, 'show']);
 // REQUEST AREA
 Router::post("/ajax", [RequestController::class, 'post']);
 Router::get("/ajax", [RequestController::class, 'get']);
+
+Router::post("/handler", [HandlerController::class, 'post']);
+
 
 if(Router::handle() == 404){
     view("404");

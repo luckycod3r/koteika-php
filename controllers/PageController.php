@@ -10,11 +10,13 @@ class PageController{
     public static function index()
     {
         $data = [];
-        $data["news"] = db()->query("SELECT * FROM `news`")->fetchAll();
+   //     $data["news"] = db()->query("SELECT * FROM `news`")->fetchAll();
 
         view("index",[
             "data" => $data
         ]);
+
+
 
 
     }
