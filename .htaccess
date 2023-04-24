@@ -1,5 +1,7 @@
-RewriteEngine On
+#RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-f
-
-RewriteRule ^(.*)$ public/index.php
+#RewriteRule ^space/([^/]*)$ index.php?page=space_page&space_id=$1 [L]
+#RewriteRule ^dashboard/([^/]*)$ index.php?page=dashboard_page&arg=$1 [L]
+#RewriteRule register/([^/]*)$ index.php?page=register&step=$1 [L]
+#RewriteRule ^logout/([^/]*)$ index.php?action=logout [L]
+#RewriteRule ^snippet/([^/]*)$ index.php?page=snippet&snipp=$1 [L]
