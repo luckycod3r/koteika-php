@@ -193,6 +193,8 @@ $application = new Application();
 
 
     <main class="main">
+
+
       <section class="main__intro">
 <!--          TODO: главная-->
         <p><?=$application->get_config_param("city")?></p>

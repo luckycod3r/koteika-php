@@ -5,6 +5,7 @@
         if($_POST["action"] == "state"){
             $roomID = $_POST["rid"];
             $view = $_POST["view"];
+            
             $application->set_view_for_room($roomID,($view == 1) ? 0 : 1);
             header("location: index.php");
         }

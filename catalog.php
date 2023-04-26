@@ -10,7 +10,6 @@ $filter = [
         "icons" => null,
         "squares" => null
 ];
-
 if($_REQUEST["sort"] == "price"){
     $filter["sort"] = "price";
     $filter["order"] = $_REQUEST["order"];
