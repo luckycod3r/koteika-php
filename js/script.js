@@ -44,13 +44,11 @@
   };
 
   var onButtonClick = function onButtonClick(evt) {
-    evt.preventDefault();
     closeFilter();
   };
 
   var onOverlayClick = function onOverlayClick(evt) {
     if (evt.target === overlay) {
-      evt.preventDefault();
       closeFilter();
     }
   };
@@ -78,7 +76,6 @@
   };
 
   openButton.addEventListener('click', function (evt) {
-    evt.preventDefault();
     openFilter();
     closeButton.addEventListener('click', onButtonClick);
     overlay.addEventListener('click', onOverlayClick);
@@ -154,7 +151,6 @@
   var ESC_KEYCODE = 27;
 
   var onBookButtonElementClick = function onBookButtonElementClick(evt) {
-    evt.preventDefault();
     overlayElement.classList.add('overlay--show');
     modalFormElement.classList.remove('modal--hide');
     modalFormElement.classList.add('modal--show');
@@ -246,13 +242,11 @@
   };
 
   var onModalFormCloseElementClick = function onModalFormCloseElementClick(evt) {
-    evt.preventDefault();
     modalFormClose();
     toggleBlur();
   };
 
   var onModalAcceptCloseElementClick = function onModalAcceptCloseElementClick(evt) {
-    evt.preventDefault();
     modalAcceptClose();
     toggleBlur();
   };
@@ -481,7 +475,6 @@
 
     if (anchor) {
       link.addEventListener('click', function (evt) {
-        evt.preventDefault();
         console.log(anchor);
         anchor.scrollIntoView({
           block: 'start',

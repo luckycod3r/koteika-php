@@ -2,26 +2,35 @@
     require '../application/classes/application.class.php';
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $errors = [];
-
-        if($_POST["login"] == ""){
-            $errors[] = "Заполните поле логин";
+        if($_POST["action"] == "state"){
+            $roomID = $_POST["rid"];
+            $view = $_POST["view"];
+            $application->set_view_for_room($roomID,($view == 1) ? 0 : 1);
+            header("location: index.php");
         }
-		if($_POST["password"] == ""){
-			$errors[] = "Заполните поле пароль";
-		}
-        if(count($errors) == 0){
+        else{
+	        $errors = [];
 
-	        $authRes = $application->auth($_POST["login"],$_POST["password"]);
+	        if($_POST["login"] == ""){
+		        $errors[] = "Заполните поле логин";
+	        }
+	        if($_POST["password"] == ""){
+		        $errors[] = "Заполните поле пароль";
+	        }
+	        if(count($errors) == 0){
 
-            if($authRes){
-                echo 'Вы вошли в аккаунт';
-            }
-            else{
-                echo 'Неправильный логин или пароль';
-            }
+		        $authRes = $application->auth($_POST["login"],$_POST["password"]);
 
+		        if($authRes){
+			        echo 'Вы вошли в аккаунт';
+		        }
+		        else{
+			        echo 'Неправильный логин или пароль';
+		        }
+
+	        }
         }
+
 
 	}
 ?>
@@ -46,6 +55,23 @@
 	<input type="password" name="password" placeholder="пароль">
 	<button type="submit">Войти</button>
     <?php
+        else:
+            $rooms = $application->get_rooms(0);
+            foreach ($rooms as $room):
+            ?>
+                <img src="../<?=$room["image"]?>" height="256" alt="картинка"><br>
+                <span><?=$room["name"]?></span><br>
+            <form action="<?=$_SERVER["PHP_SELF"]?>" method="post">
+                <input type="checkbox" id="room_<?=$room["id"]?>" <?=($room["view"] == 1) ? 'checked' : ''?>>
+                <label for="room_<?=$room["id"]?>">Отображать на главной</label><br>
+                <input type="hidden" name="action" value="state">
+                <input type="hidden" name="rid" value="<?=$room["id"]?>">
+                <input type="hidden" name="view" value="<?=$room["view"]?>">
+                <button type="submit">Обновить</button>
+            </form>
+
+        <?php
+        endforeach;
         endif;
     ?>
 </form>

@@ -37,8 +37,31 @@ class Application extends Database{
 			if($class == "icon-house") return "Домик";
 
 	}
-	public function get_catalog(){
-		$sql = $this->db->query("select * from `rooms`")->fetchAll();
+	public function get_catalog($filter){
+		$filter_query = "";
+		if(count($filter) > 0){
+			$order = "DESC";
+			if($filter["order"] == "up") $order = "ASC";
+			$filter_query = "WHERE price BETWEEN ".$filter["price"]["price_from"]." AND ".$filter["price"]["price_to"];
+
+			if($filter["squares"] != null) $filter_query .= " AND `square` in (".implode(",",$filter["squares"]).")";
+			if($filter["icons"] != null){
+				$icons_string = "";
+				foreach ($filter["icons"] as $k => $icon){
+					$icons_string .= "'".$icon."'";
+					if($k != (count($filter["icons"]) - 1)){
+						$icons_string .= ",";
+					}
+
+				}
+				$filter_query .= " AND `id` IN (SELECT `roomID` FROM `rooms-icons` WHERE `class` IN (".$icons_string.")) ";
+			}
+			$filter_query .= " ORDER BY `".$filter['sort']."` $order";
+		}
+
+
+		$sql_query = "select * from `rooms` $filter_query";
+		$sql = $this->db->query($sql_query)->fetchAll();
 		$result = [];
 		foreach ($sql as $room){
 			$icons = $this->db->query("select * from `rooms-icons` where roomID = '".$room["id"]."'")->fetchAll();
@@ -49,6 +72,15 @@ class Application extends Database{
 		}
 		return $result;
 
+	}
+	public function get_catalog_filter_squares(){
+		return $this->db->query("SELECT DISTINCT square FROM rooms")->fetchAll();
+	}
+	public function get_catalog_filter_icons(){
+		return $this->db->query("SELECT DISTINCT `class` FROM `rooms-icons`")->fetchAll();
+	}
+	public function set_view_for_room($roomID,$view){
+		$this->db->query("UPDATE `rooms` SET view = $view where id = $roomID");
 	}
 }
 $application = new Application();

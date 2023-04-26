@@ -1,5 +1,38 @@
 <?php
 require 'application/classes/application.class.php';
+$filter = [
+        "sort" => "price",
+        "order" => "down",
+        "price" => [
+                "price_from" => 0,
+                "price_to" => 3000000
+        ],
+        "icons" => null,
+        "squares" => null
+];
+
+if($_REQUEST["sort"] == "price"){
+    $filter["sort"] = "price";
+    $filter["order"] = $_REQUEST["order"];
+}
+else if($_REQUEST["sort"] == "square"){
+	$filter["sort"] = "square";
+	$filter["order"] = $_REQUEST["order"];
+}
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $price_from = $_POST["price_from"];
+    $price_to = $_POST["price_to"];
+
+    $icons = $_POST["icons"];
+    $squares = $_POST["squares"];
+    if($price_to != "" && $price_from != "") $filter["price"] = [
+            "price_from" => $price_from,
+            "price_to" => $price_to
+    ];
+    $filter["icons"] = $icons;
+    $filter["squares"] = $squares;
+}
 
 ?>
 <!DOCTYPE html>
@@ -203,7 +236,7 @@ require 'application/classes/application.class.php';
         </button>
         <ul class="sorting__list">
           <li class="sorting__item sorting__item--current">
-            <a class="sorting__link" href="#">
+            <a class="sorting__link" href="?sort=square&order=up">
               <svg class="sorting__direction" width="7" height="12">
                 <use xlink:href="#icon-up"></use>
               </svg>
@@ -211,7 +244,7 @@ require 'application/classes/application.class.php';
             </a>
           </li>
           <li class="sorting__item">
-            <a class="sorting__link" href="#">
+            <a class="sorting__link" href="?sort=square&order=down">
               <svg class="sorting__direction sorting__direction--reverse" width="7" height="12">
                 <use xlink:href="#icon-up"></use>
               </svg>
@@ -219,7 +252,7 @@ require 'application/classes/application.class.php';
             </a>
           </li>
           <li class="sorting__item">
-            <a class="sorting__link" href="#">
+            <a class="sorting__link" href="?sort=price&order=up">
               <svg class="sorting__direction" width="7" height="12">
                 <use xlink:href="#icon-up"></use>
               </svg>
@@ -227,7 +260,7 @@ require 'application/classes/application.class.php';
             </a>
           </li>
           <li class="sorting__item">
-            <a class="sorting__link" href="#">
+            <a class="sorting__link" href="?sort=price&order=down">
               <svg class="sorting__direction sorting__direction--reverse" width="7" height="12">
                 <use xlink:href="#icon-up"></use>
               </svg>
@@ -252,87 +285,45 @@ require 'application/classes/application.class.php';
     <fieldset>
       <h3>Цена за сутки,<span>&#8381;</span></h3>
       <label for="from">
-        <input type="text" id="from" placeholder="100">
+        <input type="text" id="from" name="price_from" placeholder="100">
         От
       </label>
       <label for="up-to">
-        <input type="text" id="up-to" placeholder="600">
+        <input type="text" id="up-to" name="price_to" placeholder="600">
         До
       </label>
       <span class="filter__hint">Значение "от" не должно превышать значение "до"</span>
     </fieldset>
     <fieldset>
       <h3>Площадь</h3>
-      <label for="square1">
-        <input type="checkbox" name="0,63 м2" id="square1">
-        <span></span>
-        0,63 м2
-      </label>
+        <?php
 
-      <label for="square2">
-        <input type="checkbox" name="0,90 м2" id="square2">
+        $squares = $application->get_catalog_filter_squares();
+        foreach ($squares as $k => $square):
+        ?>
+      <label for="square<?=$k?>">
+        <input type="checkbox" name="squares[]" value="<?=$square["square"]?>" id="square<?=$k?>">
         <span></span>
-        0,90 м2
+        <?=$square["square"]?> м2
       </label>
-
-      <label for="square3">
-        <input type="checkbox" name="1,13 м2" id="square3">
-        <span></span>
-        1,13 м2
-      </label>
-
-      <label for="square4">
-        <input type="checkbox" name="1,56 м2" id="square4">
-        <span></span>
-        1,56 м2
-      </label>
-
-      <label for="square5">
-        <input type="checkbox" name="2,56 м2" id="square5">
-        <span></span>
-        2,56 м2
-      </label>
-
-      <label for="square6">
-        <input type="checkbox" name="2,88 м2" id="square6">
-        <span></span>
-        2,88 м2
-      </label>
+        <?php endforeach;?>
     </fieldset>
     <fieldset>
       <h3>Оснащение номера</h3>
-
-      <label for="Empy">
-        <input type="checkbox" name="Пустой номер" id="Empy">
+        <?php
+            $apartaments = $application->get_catalog_filter_icons();
+            foreach ($apartaments as $k => $icon):
+        ?>
+      <label for="ap<?=$k?>>">
+        <input type="checkbox" name="icons[]" value="<?=$icon["class"]?>" id="ap<?=$k?>>">
         <span></span>
-        Пустой номер
+        <?=$application->get_icon_name($icon["class"])?>
       </label>
-
-      <label for="bed">
-        <input type="checkbox" name="Лежак" id="bed">
-        <span></span>
-        Лежак
-      </label>
-
-      <label for="claw-point">
-        <input type="checkbox" name="Когтеточка" id="claw-point">
-        <span></span>
-        Когтеточка
-      </label>
-
-      <label for="toys">
-        <input type="checkbox" name="Игровой-комплекс" id="toys">
-        <span></span>
-        Игровой-комплекс
-      </label>
-
-      <label for="home">
-        <input type="checkbox" name="Домик" id="home">
-        <span></span>
-        Домик
-      </label>
+    <?php
+        endforeach;
+    ?>
     </fieldset>
-    <button type="button">
+    <button type="submit">
       <span>Применить</span>
       <span>Подобрать</span>
     </button>
@@ -349,7 +340,7 @@ require 'application/classes/application.class.php';
         <h2 class="visually-hidden">Результаты поиска</h2>
         <ul class="catalog__list">
             <?php
-                $rooms = $application->get_catalog();
+                $rooms = $application->get_catalog($filter);
                 foreach ($rooms as $room):
             ?>
           <li class="catalog__item">
@@ -383,7 +374,7 @@ require 'application/classes/application.class.php';
                     <?php endforeach;?>
                 </li>
                 <li class="offer__description-item">
-                  Цена за сутки: <b>600&#8381;</b>
+                  Цена за сутки: <b><?=$room["price"]?>&#8381;</b>
                 </li>
               </ul>
               <a class="button offer__button" href="#">
